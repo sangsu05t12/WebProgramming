@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 정보 입력</title>
+    <link rel=stylesheet href="first.css">
+</head>
+<body>
+
+<div id="overlay">
+    <div id="popup">
+        <label for="name">이름:</label>
+        <input type="text" id="name">
+
+        <label for="age">나이:</label>
+        <input type="text" id="age">
+
+        <label for="studentNumber">학번:</label>
+        <input type="text" id="studentNumber">
+
+        <button onclick="submitForm()">입력 완료</button>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        var name = document.getElementById("name").value;
+        var age = document.getElementById("age").value;
+        var studentNumber = document.getElementById("studentNumber").value;
+
+        if (name && age && studentNumber) {
+            // 입력값을 어떻게 활용할지 여기에 작성
+
+            // 예시: 입력값을 출력
+            alert("이름: " + name + "\n나이: " + age + "\n학번: " + studentNumber);
+
+            // 팝업을 닫기
+            document.getElementById("overlay").style.display = "none";
+           
+            // 다른 HTML 파일로 넘어가기
+            var name = document.getElementById("name").value;
+            window.location.href = "test.html?name=" + name;
+        } else {
+            alert("입력값을 모두 입력하세요.");
+        }
+    }
+</script>
+
+<script>
+    // 페이지 로드 시 자동으로 팝업 창 띄우기
+    window.onload = function() {
+        var confirmation = confirm('웹프로그래밍 13조 과제물입니다. 확인하시겠습니까?');
+        
+        if (confirmation) {
+            document.getElementById("overlay").style.display = "flex";
+        }
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>사용자 정보 입력</title>
+  <link rel=stylesheet href="weather_css.css">
+  <script src="jquery-3.6.0.min.js"></script>
+  
+
+</head>
+<!--------맨 윗줄 반가워용------------>
+<body>
+<h2>
+    <span id="welcomeMessage"></span>
+    <hr>
+</h2>
+<script>
+  // URL 매개변수를 가져오는 함수
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+// URL에서 이름 매개변수를 가져옵니다.
+var nameParam = getParameterByName('name');
+
+// 검색된 이름을 사용하여 환영 메시지를 표시합니다.
+if (nameParam) {
+    document.getElementById("welcomeMessage").innerHTML = nameParam + "님 반갑습니다 !";
+} else {
+    document.getElementById("welcomeMessage").innerHTML = "반갑습니다 !";
+}
+</script>
+<!--------맨 윗줄 반가워용끝------------>
+    <a class="team-info-click" href="javascript:popup_open()">팀원소개</a>
+    <h4 class="localclick">지역별 맛집 선택하기</h4>
+    <div class="radiobutton">
+      <input type='radio' name="area" value="area1" onclick="getArea(); getArea2();" checked>부산
+      <input type='radio' name="area" value="area2" onclick="getArea(); getArea2();">대구
+      <input type='radio' name="area" value="area3" onclick="getArea(); getArea2();">서울
+    </div>
+    <div class="checkbutton">
+      <button class="check" onclick="areaclick(areaName); areaclick2(areaName); areaclick3(areaName);">
+        <a href="javascript:food_open()">확인</a>
+      </button>
+    </div>
+    <!--메모장 및 그림판-->
+    <div class="writing">
+      <h4 class="mc">메모장 및 그림판</h4>
+      <div class="textMemo">
+        <textarea class="content" id="content" placeholder="내용"></textarea>
+      </div>
+      <div class="canvas">
+        <button id="pen">펜</button>
+        <button id="eraser">지우개</button>
+        <input id="width" type="range" min="1" max="10" value="1" />
+        <br />
+        <canvas class="canvasMemo" id="canvasMemo" width="500" height="300"></canvas>
+      </div>
+    </div>
+
+    <!--팀원 소개 팝업-->
+    <div class="layer_popup1" id="layer_popup1">
+      <div class="popup1">
+        <h2 id="close_popup"><a href="javascript:popup_close();" >X</a></h2>
+        <div class="menu" style="padding:40px;">
+          <ol style="font-size: 20px; padding: 0px 0px 0px 0px;">팀원소개</ol>
+          <ol class="next_link">
+            <li><a href="#" onclick="teamMemberclick('team-manager'); return false;">팀장</a></li>
+            <li style="width: 10px;">&nbsp;</li>
+            <li><a href="#" onclick="teamMemberclick('team-member1'); return false;">팀원1</a></li>
+            <li style="width: 10px;">&nbsp;</li>
+            <li><a href="#" onclick="teamMemberclick('team-member2'); return false;">팀원2</a></li>
+          </ol>
+        </div>
+        <div style="padding: 80px 5px 50px 5px;">
+          <table id="team_info">
+            <td width="150" valign="top">
+              <div style="text-align: center;">
+                <img class="team_one" id="team_one" height="140">
+              </div>
+            </td>
+            <td width="10"></td>
+            <td width="500" valign="top">
+              <!--팀원 정보 테이블-->
+              <div class="member-info" style="margin:10px 0;">
+                <table width="450" height="150" border="1" cellspacing="0">
+                  <colgroup>
+                    <col width="120px">
+                    <col>
+                  </colgroup>
+                  <tbody>
+                    <tr id="team-info-row">
+                       <th scope="col">구분</th>
+                       <td data-column="구분" style="text-align: left;"></td>
+                     </tr>
+                    <tr id="team-info-row1">
+                      <th scope="col">이름</th>
+                      <td data-column="이름" style="text-align: left;"></td>
+                    </tr>
+                    <tr id="team-info-row2">
+                      <th scope="col">학번</th>
+                      <td data-column="학번" style="text-align: left;"></td>
+                    </tr>
+                    <tr id="team-info-row3">
+                       <th scope="col">맡은 역할</th>
+                       <td data-column="맡은역할" style="text-align: left;"></td>
+                    </tr>  
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!--음식 정보 팝업-->
+    <div class="layer_popup2" id="layer_popup2">
+      <div class="food">
+        <h2 id="close_popup"><a href="javascript:food_close();" >X</a></h2>
+        <div class="slider">
+          <div class="images">
+              <img class="image" id="food1"/>
+              <img class="image" id="food2"/>
+              <img class="image" id="food3"/>
+              <img class="image" id="food4"/>
+              <img class="image" id="food5"/>
+          </div>
+        </div>
+        <div class="ct">
+            <div class="cts">
+                <textarea class="con" id="food-info1" readonly disabled></textarea>
+                <textarea class="con" id="food-info2" readonly disabled></textarea>
+                <textarea class="con" id="food-info3" readonly disabled></textarea>
+                <textarea class="con" id="food-info4" readonly disabled></textarea>
+                <textarea class="con" id="food-info5" readonly disabled></textarea>
+            </div>
+        </div>
+        <!--팝업 내 날씨 정보 표시-->
+        <div class="weather-info">
+          <dl>
+            <dt>위치</dt>
+            <dd class="place"></dd>
+            <dt>기온</dt>
+            <dd class="temperature"></dd>
+            <dt>설명</dt> <img class="icon">
+            <dd class="description"></dd>
+          </dl>
+          <br>
+          <a href="https://weather.naver.com/" onlick="return query()" style="color:red;">
+              그 외 날씨 확인하기
+          </a>
+        </div>
+ <!--팝업 내 계산기-->
+ <div class="calculator">
+  <form action=""><p> 계산서 </p>
+    <table border="1" cellspacing="0">
+        <tbody><tr> <th> 음식 이름  </th><th> 가격 </th> <th> 수량 </th> <th> 합계 </th> </tr>
+        <tr>
+            <td id="f1">  </td> <td id="ss1"> 원 </td>
+            <td> <input id="food11" style="border:none" type="text" size="2" value="0" onclick="this.select();"> </td>
+            <td> <input id="food1Total" style="border:none" type="text" size="6" value="0" readonly> 원</td>
+        </tr>
+        <tr>
+            <td id="f2">  </td> <td id="ss2"> 원 </td>
+            <td> <input id="food22" style="border:none" type="text" size="2" value="0" onclick="this.select();"> </td>
+            <td> <input id="food2Total" style="border:none" type="text" size="6" value="0" readonly> 원</td>
+        </tr>
+        <tr>
+            <td id="f3">  </td> <td id="ss3"> 원 </td>
+            <td> <input id="food33" style="border:none" type="text" size="2" value="0" onclick="this.select();"> </td>
+            <td> <input id="food3Total" style="border:none" type="text" size="6" value="0" readonly> 원</td>
+        </tr>
+        <tr>
+          <td id="f4">  </td> <td id="ss4"> 원 </td>
+          <td> <input id="food44" style="border:none" type="text" size="2" value="0" onclick="this.select();"> </td>
+          <td> <input id="food4Total" style="border:none" type="text" size="6" value="0" readonly> 원</td>
+        </tr>
+        <tr>
+          <td id="f5">  </td> <td id="ss5"> 원 </td>
+          <td> <input id="food55" style="border:none" type="text" size="2" value="0" onclick="this.select();"> </td>
+          <td> <input id="food5Total" style="border:none" type="text" size="6" value="0" readonly> 원</td>
+        </tr>
+        
+        <tr>
+            <td> 합계 </td> <td> &nbsp; </td>
+            <td> <input id="totalNumber" style="border:none" type="text" size="2" value="0" readonly> </td>
+            <td> <input id="totalPrice" style="border:none" type="text" size="6" value="0" readonly> 원</td>
+        </tr>
+    </tbody></table> <br>
+    <input type="button" value="합계계산" onclick="updateAll();">
+    <input type="reset" value="초기화">
+  </form>
+</div>
+      </div>
+    </div>
+    <script src="weather.js"></script>
+    <script src="loading.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
